@@ -72,6 +72,10 @@ public class GroupController implements Initializable {
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        productsTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            editProductButton.setDisable(newSelection == null);
+        });
+        editProductButton.setDisable(true);
         currentGroup = (Group) Main.window.getUserData();
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("Name"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("Description"));
