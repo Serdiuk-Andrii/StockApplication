@@ -56,6 +56,7 @@ public class AddGroupController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Object object = Main.window.getUserData();
         if (object != null) {
+
             Group group = (Group) object;
             addGroupName.setText(group.getName());
             addGroupDescription.setText(group.getDescription());
