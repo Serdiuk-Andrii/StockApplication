@@ -3,6 +3,9 @@ package sample.Client.Controller;
 import Exceptions.CryptoException;
 import Exceptions.PacketDecodeException;
 import Server.Product;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -10,6 +13,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import sample.Utilities.NumberFieldChangedListener;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,35 +30,43 @@ public class AddProductController implements Initializable {
     int oldAmount;
 
     @FXML
-    private TextField addProductName;
+    private JFXTextField addProductName;
 
     @FXML
-    private TextArea addProductDescription;
+    private JFXTextArea addProductDescription;
 
     @FXML
-    private TextField addProductProducer;
+    private JFXTextField addProductProducer;
 
     @FXML
-    private TextField addProductPrice;
+    private JFXTextField addProductPrice;
 
     @FXML
-    private TextField addProductAmount;
+    private JFXTextField addProductAmount;
+
 
     @FXML
     private Button addProductButton;
 
     @FXML
     void onCreateProductClicked(MouseEvent event) {
-        if (inputDataIsCorrect()) {
-            Product product = new Product();
-            if (isCreating)
-                setNewProductData(product);
-            else
-                updateProductData(product);
-            Main.window.setUserData(product);
-            Stage stage = (Stage) addProductButton.getScene().getWindow();
-            stage.close();
+        if (validateAllFields()) {
+            if (inputDataIsCorrect()) {
+                Product product = new Product();
+                if (isCreating)
+                    setNewProductData(product);
+                else
+                    updateProductData(product);
+                Main.window.setUserData(product);
+                Stage stage = (Stage) addProductButton.getScene().getWindow();
+                stage.close();
+            }
         }
+    }
+
+    private boolean validateAllFields() {
+        return addProductName.validate() && addProductDescription.validate() && addProductProducer.validate()
+                && addProductPrice.validate() && addProductAmount.validate();
     }
 
     private void updateProductData(Product product) {
@@ -89,6 +101,7 @@ public class AddProductController implements Initializable {
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initializeValidators();
         if (Main.window.getUserData().getClass() == Product.class) {
             Product product = (Product) Main.window.getUserData();
             oldName = product.getName();
@@ -104,5 +117,25 @@ public class AddProductController implements Initializable {
             addProductButton.setText("Change");
         } else
             isCreating = true;
+    }
+
+    private void initializeValidators() {
+        RequiredFieldValidator nameValidator = new RequiredFieldValidator();
+        nameValidator.setMessage("Empty name");
+        addProductName.getValidators().add(nameValidator);
+        RequiredFieldValidator descriptionValidator = new RequiredFieldValidator();
+        descriptionValidator.setMessage("Empty description");
+        addProductDescription.getValidators().add(descriptionValidator);
+        RequiredFieldValidator producerValidator = new RequiredFieldValidator();
+        descriptionValidator.setMessage("Empty producer");
+        addProductProducer.getValidators().add(producerValidator);
+        RequiredFieldValidator amountValidator = new RequiredFieldValidator();
+        descriptionValidator.setMessage("Empty amount");
+        addProductAmount.getValidators().add(amountValidator);
+        addProductAmount.textProperty().addListener(new NumberFieldChangedListener(addProductAmount, NumberFieldChangedListener.Type.INT));
+        RequiredFieldValidator priceValidator = new RequiredFieldValidator();
+        descriptionValidator.setMessage("Empty price");
+        addProductPrice.getValidators().add(producerValidator);
+        addProductPrice.textProperty().addListener(new NumberFieldChangedListener(addProductPrice, NumberFieldChangedListener.Type.DOUBLE));
     }
 }

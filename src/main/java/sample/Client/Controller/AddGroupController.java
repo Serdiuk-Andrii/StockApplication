@@ -1,5 +1,8 @@
 package sample.Client.Controller;
 
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -19,10 +22,10 @@ public class AddGroupController implements Initializable {
     private String oldDescription;
 
     @FXML
-    private TextField addGroupName;
+    private JFXTextField addGroupName;
 
     @FXML
-    private TextArea addGroupDescription;
+    private JFXTextArea addGroupDescription;
 
     @FXML
     private Button addGroupButton;
@@ -30,30 +33,33 @@ public class AddGroupController implements Initializable {
 
     @FXML
     private void addGroupButtonClicked() {
-        Group group = new Group();
-        if (oldName != null) {
-            group.setName(oldName);
-            String newName = addGroupName.getText();
-            if (oldName.equals(newName))
-                group.setNewName(null);
+        if (addGroupName.validate() && addGroupDescription.validate()) {
+            Group group = new Group();
+            if (oldName != null) {
+                group.setName(oldName);
+                String newName = addGroupName.getText();
+                if (oldName.equals(newName))
+                    group.setNewName(null);
+                else
+                    group.setNewName(newName);
+            } else
+                group.setName(addGroupName.getText());
+            String newDescription = addGroupDescription.getText();
+            if (oldDescription != null && oldDescription.equals(newDescription))
+                group.setDescription(null);
             else
-                group.setNewName(newName);
-        } else
-            group.setName(addGroupName.getText());
-        String newDescription = addGroupDescription.getText();
-        if (oldDescription != null && oldDescription.equals(newDescription))
-            group.setDescription(null);
-        else
-            group.setDescription(newDescription);
-        Main.window.setUserData(group);
-        Stage stage = (Stage) addGroupButton.getScene().getWindow();
-        stage.close();
+                group.setDescription(newDescription);
+            Main.window.setUserData(group);
+            Stage stage = (Stage) addGroupButton.getScene().getWindow();
+            stage.close();
+        }
     }
 
 
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initializeValidators();
         Object object = Main.window.getUserData();
         if (object != null) {
 
@@ -64,5 +70,14 @@ public class AddGroupController implements Initializable {
             oldName = group.getName();
             oldDescription = group.getDescription();
         }
+    }
+
+    private void initializeValidators() {
+        RequiredFieldValidator nameValidator = new RequiredFieldValidator();
+        nameValidator.setMessage("Empty name");
+        addGroupName.getValidators().add(nameValidator);
+        RequiredFieldValidator descriptionValidator = new RequiredFieldValidator();
+        descriptionValidator.setMessage("Empty description");
+        addGroupDescription.getValidators().add(descriptionValidator);
     }
 }

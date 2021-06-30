@@ -36,6 +36,7 @@ import java.util.function.Predicate;
 
 public class Controller implements Initializable {
 
+
     @FXML
     private TextField searchBox;
     @FXML
@@ -156,6 +157,10 @@ public class Controller implements Initializable {
         Main.clientTCP.removeGroup(currentSelectedGroup.getName());
         removeGroupButton.setDisable(true);
         editGroupButton.setDisable(true);
+        groupOpenButton.setDisable(true);
+        currentSelectedGroup = null;
+        groupName.setText("");
+        groupDescription.setText("");
     }
 
     private void removeProductFromGrid() throws IOException {
@@ -192,6 +197,7 @@ public class Controller implements Initializable {
         currentSelectedGroup = group;
         removeGroupButton.setDisable(false);
         editGroupButton.setDisable(false);
+        groupOpenButton.setDisable(false);
     }
 
     @SneakyThrows
@@ -211,12 +217,14 @@ public class Controller implements Initializable {
     private void setupDefaultConfiguration() {
         removeGroupButton.setDisable(true);
         editGroupButton.setDisable(true);
+        groupOpenButton.setDisable(true);
         getData();
         if (groups.size() > 0)
             setChosenGroup(groups.get(0));
         listener = new MyListener() {
             @Override
             public void onClickListener(Group group) {
+                editGroupButton.setDisable(false);
                 setChosenGroup(group);
             }
         };

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -14,32 +14,32 @@
       <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane prefHeight="0.0" prefWidth="600.0" VBox.vgrow="ALWAYS" />
-            <TextField fx:id="addProductName" promptText="Product name">
-               <VBox.margin>
+            <JFXTextField fx:id="addProductName" promptText="Product name">
+               <padding>
                   <Insets left="200.0" right="200.0" top="70.0" />
-               </VBox.margin>
-            </TextField>
-            <TextArea fx:id="addProductDescription" prefHeight="107.0" prefWidth="294.0" promptText="Product description">
+               </padding>
+            </JFXTextField>
+            <JFXTextArea fx:id="addProductDescription" promptText="Description">
                <VBox.margin>
                   <Insets left="100.0" right="100.0" top="20.0" />
                </VBox.margin>
-            </TextArea>
-            <TextField fx:id="addProductProducer" promptText="Producer">
-               <VBox.margin>
+            </JFXTextArea>
+            <JFXTextField fx:id="addProductProducer" promptText="Producer">
+               <padding>
                   <Insets left="100.0" right="100.0" top="20.0" />
-               </VBox.margin>
-            </TextField>
+               </padding>
+            </JFXTextField>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" top="25.0" />
                </VBox.margin>
                <children>
-                  <TextField fx:id="addProductPrice" promptText="Price" />
-                  <TextField fx:id="addProductAmount" promptText="Amount">
+                  <JFXTextField fx:id="addProductPrice" promptText="Price" />
+                  <JFXTextField fx:id="addProductAmount" promptText="Amount">
                      <HBox.margin>
                         <Insets left="25.0" />
                      </HBox.margin>
-                  </TextField>
+                  </JFXTextField>
                </children>
             </HBox>
             <Button fx:id="addProductButton" mnemonicParsing="false" onMouseReleased="#onCreateProductClicked" text="Create product">

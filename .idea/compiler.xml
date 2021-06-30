@@ -21,7 +21,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="StockApplication" target="16" />
+      <module name="StockApplication" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
