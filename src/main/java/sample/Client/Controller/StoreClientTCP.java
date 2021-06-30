@@ -125,7 +125,8 @@ public class StoreClientTCP {
         Packet packet = new Packet(response);
         String encodedGroups = packet.getMessage().getMessageText();
         List<Group> groups = new ArrayList<>();
-        processEncodedGroupsInString(encodedGroups, groups);
+        if (encodedGroups != null && !encodedGroups.isEmpty())
+            processEncodedGroupsInString(encodedGroups, groups);
         return groups;
     }
 
