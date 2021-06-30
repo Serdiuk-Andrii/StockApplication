@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Client.Controller.AddGroupController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/add_item.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Client.Controller.AddGroupController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-            <TextField fx:id="addGroupName" promptText="Group name">
+            <JFXTextField fx:id="addGroupName" labelFloat="true" promptText="Name">
                <VBox.margin>
-                  <Insets left="200.0" right="200.0" top="70.0" />
+                  <Insets left="100.0" right="100.0" top="70.0" />
                </VBox.margin>
-            </TextField>
-            <TextArea fx:id="addGroupDescription" prefHeight="107.0" prefWidth="294.0" promptText="Group description">
+            </JFXTextField>
+            <JFXTextArea fx:id="addGroupDescription" labelFloat="true" promptText="Description">
                <VBox.margin>
                   <Insets left="100.0" right="100.0" top="50.0" />
                </VBox.margin>
-            </TextArea>
-            <Button fx:id="addGroupButton" mnemonicParsing="false" onMouseReleased="#addGroupButtonClicked" text="Create group">
+            </JFXTextArea>
+            <JFXButton fx:id="addGroupButton" onMouseReleased="#addGroupButtonClicked" text="Create group">
                <VBox.margin>
-                  <Insets top="70.0" />
+                  <Insets bottom="30.0" top="50.0" />
                </VBox.margin>
-            </Button>
+            </JFXButton>
             <Pane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>

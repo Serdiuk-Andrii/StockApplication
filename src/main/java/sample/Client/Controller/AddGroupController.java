@@ -1,5 +1,8 @@
 package sample.Client.Controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -19,13 +22,13 @@ public class AddGroupController implements Initializable {
     private String oldDescription;
 
     @FXML
-    private TextField addGroupName;
+    private JFXTextField addGroupName;
 
     @FXML
-    private TextArea addGroupDescription;
+    private JFXTextArea addGroupDescription;
 
     @FXML
-    private Button addGroupButton;
+    private JFXButton addGroupButton;
 
 
     @FXML

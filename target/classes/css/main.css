@@ -1,22 +1,31 @@
-.search-box {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 100;
-
+*{
+    -fx-primary : #00243F;
+    -fx-gray: #C2C2C2;
+    -fx-text : #B2B2B2;
+    -fx-secondary : #FF8C00;
+    -fx-white : #FFFFFF;
 }
 
-.transperent {
-    -fx-background-color: rgba(0, 0, 0, 0);
+.root{
+    -fx-background-color: -fx-primary;
 }
 
-.search-button {
-    -fx-background-color: #8d8282;
-    -fx-background-radius: 30;
+.button{
+    -fx-text-fill: -fx-text;
+    -fx-background-color: -fx-primary;
+    -fx-border-color: -fx-secondary;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-font-size: 12pt;
 }
 
-.left-bar {
-    -fx-background-color: #D2D2D2;
+.button:hover{
+    -fx-text-fill: -fx-white;
+    -fx-background-color: -fx-secondary;
+    -fx-border-color: -fx-secondary;
 }
 
-.shadow {
-    -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 10.0, 0.0, 0.0, 10.0);
+.label {
+    -fx-text-fill: -fx-text;
+    -fx-font-size: 14;
 }
