@@ -114,8 +114,9 @@ public class GroupController implements Initializable {
     }
 
     private void addProductIfCorrect() throws IOException, CryptoException, PacketDecodeException {
-        Product product =  (Product) Main.window.getUserData();
-        if (product != null) {
+        Object object = Main.window.getUserData();
+        if (object != null && object.getClass() == Product.class) {
+            Product product = (Product) object;
             addProduct(product);
             Main.window.setUserData(null);
         }
