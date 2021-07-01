@@ -46,8 +46,6 @@ public class Item {
     public void setGroup(final Group group, final MyListener listener) {
         this.group = group;
         itemProductName.setText(group.getName());
-        itemCost.setText(getGroupCost());
-        itemAmount.setText(getProductsAmount());
         this.listener = listener;
     }
 
@@ -61,14 +59,6 @@ public class Item {
 
     public Group getGroup() {
         return group;
-    }
-
-    private String getGroupCost() {
-        return "Cost";
-    }
-
-    private String getProductsAmount() {
-        return "Amount";
     }
 
 }

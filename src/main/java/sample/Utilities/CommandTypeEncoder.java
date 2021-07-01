@@ -39,7 +39,8 @@ public class CommandTypeEncoder {
             DELETE = 32,
             LIST_ALL = 64,
             COST = 128,
-            LIST_SPECIFIC = 256;
+            LIST_SPECIFIC = 256,
+            LIST_CONTAINING_STRING = 512;
 
 
     static public final int
@@ -47,7 +48,8 @@ public class CommandTypeEncoder {
             PRODUCT_READ = PRODUCT ^ READ,
             PRODUCT_UPDATE = PRODUCT ^ UPDATE,
             PRODUCT_DELETE = PRODUCT ^ DELETE,
-            PRODUCT_LIST_ALL = PRODUCT ^ LIST_ALL;
+            PRODUCT_LIST_ALL = PRODUCT ^ LIST_ALL,
+            PRODUCT_COST = PRODUCT ^ COST;
 
     static public final int
             GROUP_CREATE = GROUP ^ CREATE,
@@ -56,7 +58,8 @@ public class CommandTypeEncoder {
             GROUP_DELETE = GROUP ^ DELETE,
             GROUP_LIST_ALL = GROUP ^ LIST_ALL,
             GROUP_COST = GROUP ^ COST,
-            GROUP_LIST_SPECIFIC = GROUP ^ LIST_SPECIFIC;
+            GROUP_LIST_SPECIFIC = GROUP ^ LIST_SPECIFIC,
+            GROUP_LIST_CONTAINING_STRING = GROUP ^ LIST_CONTAINING_STRING;
 
     public static boolean isProduct(int INCOMING_COMMAND_TYPE) {
         return (INCOMING_COMMAND_TYPE & PRODUCT) == 1;

@@ -121,20 +121,20 @@ public class AddProductController implements Initializable {
 
     private void initializeValidators() {
         RequiredFieldValidator nameValidator = new RequiredFieldValidator();
-        nameValidator.setMessage("Empty name");
+    //    nameValidator.setMessage("Empty name");
         addProductName.getValidators().add(nameValidator);
         RequiredFieldValidator descriptionValidator = new RequiredFieldValidator();
-        descriptionValidator.setMessage("Empty description");
+     //   descriptionValidator.setMessage("Empty description");
         addProductDescription.getValidators().add(descriptionValidator);
         RequiredFieldValidator producerValidator = new RequiredFieldValidator();
-        descriptionValidator.setMessage("Empty producer");
+      //  descriptionValidator.setMessage("Empty producer");
         addProductProducer.getValidators().add(producerValidator);
         RequiredFieldValidator amountValidator = new RequiredFieldValidator();
-        descriptionValidator.setMessage("Empty amount");
+ //       descriptionValidator.setMessage("Empty amount");
         addProductAmount.getValidators().add(amountValidator);
         addProductAmount.textProperty().addListener(new NumberFieldChangedListener(addProductAmount, NumberFieldChangedListener.Type.INT));
         RequiredFieldValidator priceValidator = new RequiredFieldValidator();
-        descriptionValidator.setMessage("Empty price");
+//        descriptionValidator.setMessage("Empty price");
         addProductPrice.getValidators().add(producerValidator);
         addProductPrice.textProperty().addListener(new NumberFieldChangedListener(addProductPrice, NumberFieldChangedListener.Type.DOUBLE));
     }

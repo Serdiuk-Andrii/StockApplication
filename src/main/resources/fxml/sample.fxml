@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Client.Controller.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Client.Controller.Controller">
    <children>
-      <BorderPane layoutX="163.0" layoutY="62.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <left>
-            <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="184.0" styleClass="left-bar" stylesheets="@../css/main.css" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox alignment="TOP_CENTER" maxWidth="250.0" prefHeight="344.0" prefWidth="184.0" style="-fx-background-color: #202022;" styleClass="left-bar" stylesheets="@../css/main.css" HBox.hgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                  <VBox alignment="CENTER" prefHeight="82.0" prefWidth="179.0" spacing="10.0">
                      <children>
-                        <Label id="Username" alignment="CENTER" text="Label" />
+                        <Label id="Username" fx:id="username" alignment="CENTER" text="Label" textAlignment="CENTER" />
+                        <Label fx:id="globalCost" text="Label" textAlignment="CENTER" />
                      </children>
-                  </HBox>
-                  <Pane prefHeight="42.0" prefWidth="184.0" VBox.vgrow="ALWAYS" />
-                  <VBox id="groupContainer" alignment="TOP_CENTER" prefHeight="208.0" prefWidth="164.0">
+                  </VBox>
+                  <Pane prefHeight="40.0" prefWidth="179.0" VBox.vgrow="ALWAYS" />
+                  <VBox id="groupContainer" alignment="TOP_CENTER" prefHeight="244.0" prefWidth="159.0" spacing="8.0">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                      <children>
-                        <AnchorPane prefHeight="35.0" prefWidth="164.0">
-                           <children>
-                              <Label id="groupName" fx:id="groupName" layoutX="63.0" prefHeight="25.0" prefWidth="30.0" text="Label" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="63.0" AnchorPane.topAnchor="0.0" />
-                              <ImageView fx:id="settings" fitHeight="15.0" fitWidth="15.0" layoutX="143.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </AnchorPane>
-                        <Label id="groupDescription" fx:id="groupDescription" alignment="CENTER" contentDisplay="CENTER" prefHeight="198.0" prefWidth="164.0" text="Label" />
-                        <Button id="groupOpenButton" fx:id="groupOpenButton" alignment="CENTER" mnemonicParsing="false" onMouseReleased="#openGroup" text="Open">
+                        <Label id="groupName" fx:id="groupName" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="159.0" text="Label" textAlignment="CENTER" />
+                        <Label id="groupDescription" fx:id="groupDescription" alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="134.0" prefWidth="159.0" text="Label" textAlignment="CENTER" wrapText="true">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin></Label>
+                        <Button id="groupOpenButton" fx:id="groupOpenButton" alignment="CENTER" mnemonicParsing="false" onMouseReleased="#openGroup" text="Open" textAlignment="CENTER">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
@@ -47,58 +46,106 @@
                   </VBox>
                </children>
             </VBox>
-         </left>
-         <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" prefHeight="400.0" prefWidth="426.0" HBox.hgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER" prefHeight="70.0" prefWidth="416.0">
+                  <HBox alignment="CENTER" prefHeight="70.0" prefWidth="365.0">
                      <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
+                        <Insets left="20.0" />
                      </VBox.margin>
                      <children>
-                        <TextField id="searchBar" />
-                        <Button id="searchButton" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" text="Button" HBox.hgrow="NEVER">
+                        <Pane prefHeight="79.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
+                        <JFXTextField fx:id="searchBox" labelFloat="true" promptText="Search" unFocusColor="#fafafa" />
+                        <Button id="searchButton" fx:id="searchButton" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onMouseReleased="#searchOnClick" text="Search" HBox.hgrow="NEVER">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                            <HBox.margin>
-                              <Insets left="40.0" />
+                              <Insets left="40.0" right="20.0" />
                            </HBox.margin>
                         </Button>
+                        <VBox alignment="CENTER" prefHeight="71.0" prefWidth="127.0" spacing="9.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXToggleButton fx:id="nameToggle" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="24.0" prefWidth="143.0" selected="true" text="Name" textFill="#fafafa" />
+                                    <JFXToggleButton fx:id="descriptionToggle" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="143.0" text="Description" textFill="#fafafa" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                                    <JFXToggleButton fx:id="productsToggle" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="143.0" text="Products" textFill="#fafafa" />
+                                    <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                                 </children>
+                              </HBox>
+                           </children>
+                           <HBox.margin>
+                              <Insets bottom="5.0" top="5.0" />
+                           </HBox.margin>
+                        </VBox>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="339.0" prefWidth="416.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <ScrollPane prefHeight="335.0" prefWidth="392.0" HBox.hgrow="ALWAYS">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="335.0" prefWidth="392.0" HBox.hgrow="ALWAYS">
                            <content>
-                              <GridPane fx:id="grid" prefHeight="0.0" prefWidth="0.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                              </GridPane>
+                              <HBox prefHeight="419.0" prefWidth="0.0">
+                                 <children>
+                                    <Pane prefHeight="419.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
+                                    <GridPane fx:id="grid" alignment="CENTER" hgap="50.0" prefHeight="419.0" prefWidth="557.0" vgap="50.0" HBox.hgrow="ALWAYS">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                    </GridPane>
+                                    <Pane prefHeight="419.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" top="20.0" />
+                                 </padding>
+                              </HBox>
                            </content>
                         </ScrollPane>
                      </children></HBox>
+                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0">
+                     <children>
+                        <Button fx:id="addGroupButton" mnemonicParsing="false" onMousePressed="#addButtonOnClick" text="Add group">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="60.0" top="5.0" />
+                           </HBox.margin></Button>
+                        <Button fx:id="editGroupButton" mnemonicParsing="false" onMousePressed="#editButtonOnClick" text="Edit">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="removeGroupButton" mnemonicParsing="false" onMouseReleased="#onRemoveButtonClicked" text="Remove">
+                           <HBox.margin>
+                              <Insets left="30.0" right="60.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Separator opacity="0.2" orientation="VERTICAL" prefHeight="200.0">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <Button fx:id="listAllProductsButton" mnemonicParsing="false" onMouseReleased="#onListAllProductsClick" text="List all products">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
+                  </HBox>
                </children>
             </VBox>
-         </center>
-         <bottom>
-            <HBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="addGroupButton" mnemonicParsing="false" onMousePressed="#addButtonOnClick" text="Add group" />
-                  <Button fx:id="editGroupButton" mnemonicParsing="false" onMousePressed="#editButtonOnClick" text="Edit">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="removeGroupButton" mnemonicParsing="false" onMouseReleased="#onRemoveButtonClicked" text="Remove">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-         </bottom>
-      </BorderPane>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

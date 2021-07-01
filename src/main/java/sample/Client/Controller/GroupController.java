@@ -32,10 +32,18 @@ import javafx.stage.Stage;
 public class GroupController implements Initializable {
 
 
+
+
     private Group currentGroup;
 
     @FXML
+    private Label globalCost;
+
+    @FXML
     private TextField searchFiled;
+
+    @FXML
+    private Button infoButton;
 
     @FXML
     private Button seacrhButton;
@@ -109,6 +117,18 @@ public class GroupController implements Initializable {
         productsTableView.setItems(sortedList);
     }
 
+    @FXML
+    void getInfoAboutGroup(MouseEvent event) {
+        try {
+            double cost = Main.clientTCP.getGroupCost(currentGroup.getName());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Group information");
+            alert.setHeaderText("The total cost of the group is: " + cost);
+            alert.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void onCreateProductClicked(MouseEvent event) throws IOException, CryptoException, PacketDecodeException {
@@ -131,9 +151,7 @@ public class GroupController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Product duplicate");
         alert.setHeaderText("Such a product already exists!");
-
         alert.showAndWait();
-        return;
     }
 
     private void addProduct(Server.Product product) throws IOException, CryptoException, PacketDecodeException {
@@ -168,6 +186,9 @@ public class GroupController implements Initializable {
     private void changeProductIfCorrect(Product oldProduct) throws IOException, CryptoException, PacketDecodeException {
         Product product = (Product) Main.window.getUserData();
         if (product != null) {
+            if (product.getNewName() == null  && product.getDescription() == null
+                    && product.getProducer() == null && product.getPrice() < 0 && product.getAmount() < 0)
+                return;
             if (Main.clientTCP.updateProduct(product)) {
                 if (product.getNewName() != null)
                     oldProduct.setName(product.getNewName());

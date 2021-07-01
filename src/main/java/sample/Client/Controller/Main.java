@@ -23,6 +23,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         window = primaryStage;
+        primaryStage.setMinWidth(750);
+        primaryStage.setMinHeight(600);
         setupConnectionWithServer();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/sample.fxml"));
         primaryStage.setTitle("Stock application");

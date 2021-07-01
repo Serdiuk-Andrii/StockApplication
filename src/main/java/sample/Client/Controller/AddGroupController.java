@@ -74,10 +74,8 @@ public class AddGroupController implements Initializable {
 
     private void initializeValidators() {
         RequiredFieldValidator nameValidator = new RequiredFieldValidator();
-        nameValidator.setMessage("Empty name");
         addGroupName.getValidators().add(nameValidator);
         RequiredFieldValidator descriptionValidator = new RequiredFieldValidator();
-        descriptionValidator.setMessage("Empty description");
         addGroupDescription.getValidators().add(descriptionValidator);
     }
 }

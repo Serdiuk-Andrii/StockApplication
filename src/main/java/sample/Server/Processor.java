@@ -20,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -47,6 +48,7 @@ public class Processor implements ConsciousRunnable {
                 if(messageType == CommandTypeEncoder.GROUP_LIST_ALL) return handleListAllGroups(message);
                 if(messageType == CommandTypeEncoder.GROUP_COST) return handleGroupCost(message);
                 if(messageType == CommandTypeEncoder.GROUP_LIST_SPECIFIC) return handleGetGroupProducts(message);
+                if(messageType == CommandTypeEncoder.GROUP_LIST_CONTAINING_STRING) return handleListContainingString(message);
             try {
                 return handleUnknownCommandType(message);
             } catch (GroupNotFoundException e) {
@@ -60,9 +62,35 @@ public class Processor implements ConsciousRunnable {
                 if(messageType == CommandTypeEncoder.PRODUCT_UPDATE) return handleUpdateProduct(message);
                 if(messageType == CommandTypeEncoder.PRODUCT_DELETE) return handleRemoveProduct(message);
                 if(messageType == CommandTypeEncoder.PRODUCT_LIST_ALL) return handleListAllProducts(message);
+                if(messageType == CommandTypeEncoder.PRODUCT_COST) return handleProductsCost(message);
                 return handleUnknownCommandType(message);
         }
         return null;
+    }
+
+    private Message handleProductsCost(Message message) throws SQLException {
+        ResultSet set = Database.getAllProductsCost();
+        double result = 0;
+        while(set.next())
+            result += set.getInt("amount")*set.getDouble("price");
+        return new Message(message.getCType(), message.getBUserId(), String.valueOf(result).getBytes(StandardCharsets.UTF_8));
+    }
+
+    private Message handleListContainingString(Message message) throws SQLException {
+        String pattern = message.getMessageText();
+        ResultSet set = Database.getProductsContainingString(pattern);
+        HashSet<Group> groupsContaining = new HashSet<>();
+        while(set.next()) {
+            Group group = new Group();
+            group.setName(set.getString("group_name"));
+            group.setDescription(set.getString("description"));
+            groupsContaining.add(group);
+        }
+        StringBuilder builder = new StringBuilder(groupsContaining.size() * 20);
+        for (Group group : groupsContaining)
+            builder.append(group.getName()).append("@").append(group.getDescription()).append("\n");
+        byte[] body = builder.toString().getBytes(StandardCharsets.UTF_8);
+        return new Message(message.getCType(), message.getBUserId(), body);
     }
 
     private Message handleGetGroupProducts(Message message) throws GroupNotFoundException, SQLException {
@@ -70,10 +98,10 @@ public class Processor implements ConsciousRunnable {
         ResultSet set = Database.getProductsFromGroup(groupName);
         StringBuilder builder = new StringBuilder(5000);
         while (set.next()) {
-            builder.append(set.getString("title")).append(",");
-            builder.append(set.getString("description")).append(",");
-            builder.append(set.getString("producer")).append(",");
-            builder.append(set.getDouble("price")).append(",");
+            builder.append(set.getString("title")).append("@");
+            builder.append(set.getString("description")).append("@");
+            builder.append(set.getString("producer")).append("@");
+            builder.append(set.getDouble("price")).append("@");
             builder.append(set.getInt("amount")).append("\n");
         }
         byte[] body = builder.toString().getBytes(StandardCharsets.UTF_8);
@@ -98,10 +126,11 @@ public class Processor implements ConsciousRunnable {
         ResultSet set = Database.getAllProducts();
         StringBuilder builder = new StringBuilder(5000);
         while (set.next()) {
-            builder.append(set.getString("title")).append(",");
-            builder.append(set.getString("description")).append(",");
-            builder.append(set.getString("producer")).append(",");
-            builder.append(set.getDouble("price")).append(",");
+            builder.append(set.getString("title")).append("@");
+            builder.append(set.getString("group_name")).append("@");
+            builder.append(set.getString("description")).append("@");
+            builder.append(set.getString("producer")).append("@");
+            builder.append(set.getDouble("price")).append("@");
             builder.append(set.getInt("amount")).append("\n");
         }
         byte[] body = builder.toString().getBytes(StandardCharsets.UTF_8);
@@ -169,10 +198,10 @@ public class Processor implements ConsciousRunnable {
         ResultSet set = Database.getProductsFromGroup(message.getMessageText());
         StringBuilder result = new StringBuilder();
         while(set.next()) {
-            result.append(set.getString("title")).append(",");
-            result.append(set.getString("description")).append(",");
-            result.append(set.getString("producer")).append(",");
-            result.append(set.getInt("amount")).append(",");
+            result.append(set.getString("title")).append("@");
+            result.append(set.getString("description")).append("@");
+            result.append(set.getString("producer")).append("@");
+            result.append(set.getInt("amount")).append("@");
             result.append(set.getDouble("price")).append("\n");
         }
         return new Message(message.getCType(), message.getBUserId(), result.toString().getBytes(StandardCharsets.UTF_8));
@@ -183,7 +212,7 @@ public class Processor implements ConsciousRunnable {
             ResultSet set = Database.getAllGroups();
             StringBuilder builder = new StringBuilder(5000);
             while (set.next()) {
-                builder.append(set.getString("group_name")).append(",");
+                builder.append(set.getString("group_name")).append("@");
                 builder.append(set.getString("description")).append("\n");
             }
             byte[] body = builder.toString().getBytes(StandardCharsets.UTF_8);

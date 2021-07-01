@@ -3,16 +3,14 @@ package sample.Client.Controller;
 import Exceptions.CryptoException;
 import Exceptions.GroupDuplicateException;
 import Exceptions.PacketDecodeException;
+import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -36,17 +34,29 @@ import java.util.function.Predicate;
 
 public class Controller implements Initializable {
 
+    @FXML
+    private Label username;
+
+    @FXML
+    private JFXToggleButton nameToggle;
+
+    @FXML
+    private JFXToggleButton descriptionToggle;
+
+    @FXML
+    private JFXToggleButton productsToggle;
+
 
     @FXML
     private TextField searchBox;
-    @FXML
-    private Button searchButton;
     @FXML
     private VBox groupContainer;
     @FXML
     private Label groupName;
     @FXML
     private Label groupDescription;
+    @FXML
+    private Label globalCost;
     @FXML
     private Button groupOpenButton;
 
@@ -60,7 +70,13 @@ public class Controller implements Initializable {
     private Button removeGroupButton;
 
     @FXML
+    private Button searchButton;
+
+    @FXML
     private GridPane grid;
+
+    @FXML
+    private Button listAllProductsButton;
 
     private int column = 0;
     private int row = 0;
@@ -71,6 +87,7 @@ public class Controller implements Initializable {
 
     private MyListener listener;
     private List<Group> groups = new ArrayList<Group>();
+    private List<Group> filteredData = new ArrayList<>();
 
 
     private void getData() {
@@ -94,6 +111,39 @@ public class Controller implements Initializable {
             Main.window.setUserData(null);
             groups.add(group);
         }
+    }
+
+    @FXML
+    void searchOnClick(MouseEvent event) throws IOException {
+        final String input = searchBox.getText();
+        if (input.isEmpty()) {
+            resetGroups();
+            return;
+        }
+        filteredData.clear();
+        if (productsToggle.isSelected()) {
+            try {
+                filteredData.addAll(Main.clientTCP.getGroupsWithProductsContainingSubstring(input));
+            } catch (CryptoException e) {
+                e.printStackTrace();
+            } catch (PacketDecodeException e) {
+                e.printStackTrace();
+            }
+        }
+        for (Group group : groups)
+            if (!filteredData.contains(group) && ((nameToggle.isSelected() && group.getName().contains(input))
+            || (descriptionToggle.isSelected() && group.getDescription().contains(input))))
+                filteredData.add(group);
+
+        filterData();
+    }
+
+    private void filterData() throws IOException {
+        grid.getChildren().clear();
+        column = 0;
+        row = 0;
+        for (Group group : filteredData)
+            addGroup(group, false);
     }
 
     private void openGroupDialog() throws IOException {
@@ -153,7 +203,7 @@ public class Controller implements Initializable {
     void onRemoveButtonClicked(MouseEvent event) throws IOException, CryptoException, PacketDecodeException {
         if (currentSelectedGroup == null)
             return;
-        removeProductFromGrid();
+        removeGroupFromGrid();
         Main.clientTCP.removeGroup(currentSelectedGroup.getName());
         removeGroupButton.setDisable(true);
         editGroupButton.setDisable(true);
@@ -161,9 +211,10 @@ public class Controller implements Initializable {
         currentSelectedGroup = null;
         groupName.setText("");
         groupDescription.setText("");
+        refreshGlobalCost();
     }
 
-    private void removeProductFromGrid() throws IOException {
+    private void removeGroupFromGrid() throws IOException {
         groups.remove(currentSelectedGroup);
         resetGroups();
     }
@@ -177,7 +228,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void openGroup() throws IOException {
+    private void openGroup() throws IOException, CryptoException, PacketDecodeException {
         Main.window.setUserData(currentSelectedGroup);
         Stage stage = new Stage();
         stage.setResizable(true);
@@ -189,6 +240,7 @@ public class Controller implements Initializable {
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.showAndWait();
+        refreshGlobalCost();
     }
 
     private void setChosenGroup(final Group group) {
@@ -203,7 +255,11 @@ public class Controller implements Initializable {
     @SneakyThrows
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setupDefaultConfiguration();
+        try {
+            setupDefaultConfiguration();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         AnchorPane pane = null;
         setupGridItemWidthAndHeight();
         try {
@@ -214,11 +270,13 @@ public class Controller implements Initializable {
         }
     }
 
-    private void setupDefaultConfiguration() {
+    private void setupDefaultConfiguration() throws IOException, CryptoException, PacketDecodeException {
         removeGroupButton.setDisable(true);
         editGroupButton.setDisable(true);
         groupOpenButton.setDisable(true);
+        refreshGlobalCost();
         getData();
+        username.setText("Welcome, root!");
         if (groups.size() > 0)
             setChosenGroup(groups.get(0));
         listener = new MyListener() {
@@ -228,8 +286,12 @@ public class Controller implements Initializable {
                 setChosenGroup(group);
             }
         };
+
     }
 
+    private void refreshGlobalCost() throws IOException, CryptoException, PacketDecodeException {
+        globalCost.setText("Current stock`s cost: " + Main.clientTCP.getGlobalCost());
+    }
 
     private void setupGridItemWidthAndHeight() {
         grid.setMinWidth(Region.USE_COMPUTED_SIZE);
@@ -272,6 +334,23 @@ public class Controller implements Initializable {
         grid.add(pane, column++, row);
     }
 
+    @FXML
+    void onListAllProductsClick(MouseEvent event) throws IOException {
+        openAllProductsWindow();
+    }
+
+    private void openAllProductsWindow() throws IOException {
+        Stage stage = new Stage();
+        stage.setResizable(true);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("All products");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/list_all_products.fxml"));
+        Parent parent = loader.load();
+
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
 
     private AnchorPane addGridItem(final Group group) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();

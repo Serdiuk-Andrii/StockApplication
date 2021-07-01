@@ -39,7 +39,7 @@ public class StoreClientTCP {
         this.clientId = clientId;
         this.packetId = UnsignedLong.ZERO;
         socket = new Socket("localhost", port);
-        socket.setSoTimeout(1000);
+        socket.setSoTimeout(100000);
         inputStream = socket.getInputStream();
         outputStream = socket.getOutputStream();
     }
@@ -83,6 +83,37 @@ public class StoreClientTCP {
         return positiveResponseFromServer();
     }
 
+    public List<Group> getGroupsWithProductsContainingSubstring(final String string) throws CryptoException, IOException, PacketDecodeException {
+        final Message message = new Message(CommandTypeEncoder.GROUP_LIST_CONTAINING_STRING, clientId, string.getBytes(StandardCharsets.UTF_8));
+        sendPacket(new Packet(APPLICATION_ID, packetId, message).convertToPacket());
+        packetId = packetId.plus(UnsignedLong.ONE);
+        final byte[] response = getResponseFromServer();
+        Packet packet = new Packet(response);
+        List<Group> list = new ArrayList<>();
+        String groups = packet.getMessage().getMessageText();
+        if (groups != null && !groups.isEmpty())
+            fillInTheListOfGroups(list, groups);
+        return list;
+    }
+
+    private void fillInTheListOfGroups(final List<Server.Group> list, final String messageText) {
+        for(String s : messageText.split("\n")) {
+            String[] values = s.split("@");
+            Group group = new Group();
+            group.setName(values[0]);
+            group.setDescription(values[1]);
+            list.add(group);
+        }
+    }
+
+    public double getGlobalCost() throws CryptoException, IOException, PacketDecodeException {
+        final Message message = new Message(CommandTypeEncoder.PRODUCT_COST, clientId, new byte[0]);
+        sendPacket(new Packet(APPLICATION_ID, packetId, message).convertToPacket());
+        packetId = packetId.plus(UnsignedLong.ONE);
+        final byte[] response = getResponseFromServer();
+        return Double.parseDouble(new Packet(response).getMessage().getMessageText());
+    }
+
     public double getGroupCost(final String groupName) throws IOException, CryptoException, PacketDecodeException {
         Group group = new Group();
         group.setName(groupName);
@@ -112,7 +143,7 @@ public class StoreClientTCP {
 
     private void processEncodedGroupsInString(final String string, final List<Group> groups) {
         for (String s : string.split("\n")) {
-            String[] values = s.split(",");
+            String[] values = s.split("@");
             Group group = new Group();
             group.setName(values[0]);
             group.setDescription(values[1]);
@@ -177,6 +208,21 @@ public class StoreClientTCP {
         return products;
     }
 
+    private void processEncodedProductsInStrings(String encodedProducts, List<Server.Product> products) {
+        if (encodedProducts == null || encodedProducts.isEmpty())
+            return;
+        for (final String s : encodedProducts.split("\n")) {
+            final String[] values = s.split("@");
+            final Product product = new Product();
+            product.setName(values[0]);
+            product.setDescription(values[1]);
+            product.setProducer(values[2]);
+            product.setPrice(Double.parseDouble(values[3]));
+            product.setAmount(Integer.parseInt(values[4]));
+            products.add(product);
+        }
+    }
+
     private byte[] requestAllProducts() throws CryptoException, IOException, PacketDecodeException {
         final Message message = new Message(CommandTypeEncoder.PRODUCT_LIST_ALL, clientId, new byte[0]);
         sendPacket(new Packet(APPLICATION_ID, packetId, message).convertToPacket());
@@ -189,21 +235,22 @@ public class StoreClientTCP {
         final Packet packet = new Packet(response);
         final String encodedProducts = packet.getMessage().getMessageText();
         final List<Product> products = new ArrayList<>();
-        processEncodedProductsInStrings(encodedProducts, products);
+        processEncodedProductsInStringsWithGroups(encodedProducts, products);
         return products;
     }
 
-    private void processEncodedProductsInStrings(final String string, final List<Product> products) {
+    private void processEncodedProductsInStringsWithGroups(final String string, final List<Product> products) {
         if (string == null || string.isEmpty())
             return;
         for (final String s : string.split("\n")) {
-            final String[] values = s.split(",");
+            final String[] values = s.split("@");
             final Product product = new Product();
             product.setName(values[0]);
-            product.setDescription(values[1]);
-            product.setProducer(values[2]);
-            product.setPrice(Double.parseDouble(values[3]));
-            product.setAmount(Integer.parseInt(values[4]));
+            product.setGroupName(values[1]);
+            product.setDescription(values[2]);
+            product.setProducer(values[3]);
+            product.setPrice(Double.parseDouble(values[4]));
+            product.setAmount(Integer.parseInt(values[5]));
             products.add(product);
         }
     }

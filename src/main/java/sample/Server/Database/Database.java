@@ -316,6 +316,18 @@ public class Database {
         preparedStatement.executeUpdate();
     }
 
+    public static ResultSet getProductsContainingString(final String string) throws SQLException {
+        final String query = "SELECT * FROM " + TABLE_NAME + " WHERE title LIKE ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, '%' + string + '%');
+        return preparedStatement.executeQuery();
+    }
+
+    public static ResultSet getAllProductsCost() throws SQLException {
+        final String query = "SELECT amount, price FROM " + TABLE_NAME;
+        return connection.createStatement().executeQuery(query);
+    }
+
     private static void changeGroupNameAndDescription(final String oldGroupName, final String newGroupName, final String newGroupDescription) throws SQLException {
         final String query = "UPDATE " + GROUPS_TABLE_NAME + " SET group_name = ?, description = ? WHERE group_name = ?";
         final PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -404,8 +416,11 @@ public class Database {
     public static void main(String[] args) throws GroupNotFoundException, GroupDuplicateException, InterruptedException, SQLException, ProductDuplicateException {
         Database.getConnection();
 //        Database.registerUser("hello", "world");
-        Database.createGroupsTable();
-        Database.createTable();
+       // Database.createGroupsTable();
+       // Database.createTable();
+        /*ResultSet set = Database.getProductsContainingString("w");
+        while(set.next())
+            System.out.println(set.getString("group_name"));*/
 //        Database.addGroup("rice", "good rice");
 //        Database.addProduct("rice", "new rice", "r", "e", 32,32);
 //        Database.removeGroup("rice");

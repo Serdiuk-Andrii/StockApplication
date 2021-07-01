@@ -7,29 +7,37 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Client.Controller.GroupController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/group.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Client.Controller.GroupController">
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="55.0" prefWidth="442.0">
+            <HBox alignment="CENTER" prefHeight="55.0" prefWidth="442.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Pane prefHeight="55.0" prefWidth="67.0" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="NEVER">
                      <children>
-                        <Button fx:id="editProductButton" layoutX="40.0" layoutY="12.0" mnemonicParsing="false" onMouseReleased="#onEditProductButtonClicked" text="Edit" />
-                     </children></Pane>
-                  <TextField fx:id="searchFiled" />
-                  <Button fx:id="seacrhButton" mnemonicParsing="false" text="Search">
+                        <Button fx:id="infoButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseReleased="#getInfoAboutGroup" text="General info" textAlignment="CENTER" HBox.hgrow="NEVER" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="NEVER">
+                     <children>
+                        <TextField id="searchFiled" fx:id="searchFiled" alignment="CENTER" promptText="Search">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
                      <HBox.margin>
-                        <Insets left="30.0" />
+                        <Insets bottom="10.0" top="10.0" />
                      </HBox.margin>
-                  </Button>
-                  <Pane prefHeight="55.0" prefWidth="60.0" HBox.hgrow="ALWAYS">
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="NEVER">
                      <children>
-                        <Button fx:id="createProductButton" alignment="TOP_LEFT" layoutX="7.0" layoutY="15.0" mnemonicParsing="false" onMouseReleased="#onCreateProductClicked" text="Create product" textAlignment="CENTER" />
-                     </children></Pane>
+                        <Button fx:id="createProductButton" alignment="TOP_LEFT" mnemonicParsing="false" onMouseReleased="#onCreateProductClicked" text="Create product" textAlignment="CENTER" HBox.hgrow="NEVER" />
+                        <Button fx:id="editProductButton" mnemonicParsing="false" onMouseReleased="#onEditProductButtonClicked" text="Edit" HBox.hgrow="NEVER" />
+                     </children>
+                  </HBox>
                </children>
             </HBox>
             <TableView fx:id="productsTableView" prefHeight="334.0" prefWidth="456.0">
@@ -44,7 +52,11 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Button fx:id="removeProductButton" mnemonicParsing="false" onMouseReleased="#onRemoveButtonClicked" text="Remove" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="removeProductButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseReleased="#onRemoveButtonClicked" text="Remove" />
+               </children>
+            </HBox>
          </children>
       </VBox>
    </center>
