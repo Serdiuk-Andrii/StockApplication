@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
@@ -24,9 +25,17 @@
                      <children>
                         <Label id="Username" fx:id="username" alignment="CENTER" text="Label" textAlignment="CENTER" />
                         <Label fx:id="globalCost" text="Label" textAlignment="CENTER" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <JFXButton fx:id="statisticsButton" buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseReleased="#showStatistics" prefHeight="39.0" prefWidth="94.0" ripplerFill="#4a00f0" styleClass="empty" stylesheets="@../css/main.css" text="Statistics" textAlignment="CENTER" />
+                           </children>
+                        </HBox>
                      </children>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
                   </VBox>
-                  <Pane prefHeight="215.0" prefWidth="250.0" VBox.vgrow="ALWAYS" />
+                  <Pane prefHeight="0.0" prefWidth="250.0" VBox.vgrow="ALWAYS" />
                   <VBox id="groupContainer" alignment="TOP_CENTER" prefHeight="244.0" prefWidth="159.0" spacing="8.0" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="10.0" />

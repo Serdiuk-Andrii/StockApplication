@@ -3,6 +3,7 @@ package sample.Client.Controller;
 import Exceptions.CryptoException;
 import Exceptions.GroupDuplicateException;
 import Exceptions.PacketDecodeException;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,6 +49,8 @@ public class Controller implements Initializable {
     private JFXToggleButton productsToggle;
 
 
+    @FXML
+    private JFXButton statisticsButton;
     @FXML
     private TextField searchBox;
     @FXML
@@ -360,6 +363,20 @@ public class Controller implements Initializable {
         Item item = fxmlLoader.getController();
         item.setGroup(group, listener);
         return pane;
+    }
+
+    @FXML
+    void showStatistics(MouseEvent event) throws IOException {
+        Stage stage = new Stage();
+        stage.setResizable(true);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("All products");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/statistics.fxml"));
+        Parent parent = loader.load();
+
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.showAndWait();
     }
 
 }

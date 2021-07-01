@@ -69,3 +69,12 @@
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
+
+.empty {
+    -fx-text-fill: white;
+    -fx-background-color: #686573;
+    -fx-border-color: #71879a;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-font-size: 12pt;
+}

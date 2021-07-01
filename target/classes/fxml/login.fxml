@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="sample.Client.Controller.LoginController">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="350.0" layoutY="57.0" prefHeight="502.0" prefWidth="800.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
+         <children>
+            <JFXTextField fx:id="username" labelFloat="true" promptText="Username">
+               <VBox.margin>
+                  <Insets left="300.0" right="300.0" top="200.0" />
+               </VBox.margin>
+            </JFXTextField>
+            <JFXPasswordField fx:id="password" labelFloat="true" promptText="Password">
+               <VBox.margin>
+                  <Insets left="300.0" right="300.0" top="60.0" />
+               </VBox.margin>
+            </JFXPasswordField>
+            <JFXButton fx:id="loginButton" buttonType="RAISED" onMouseReleased="#login" prefHeight="30.0" prefWidth="120.0" ripplerFill="#4a00f0" style="-fx-background-color: #686573;" text="Login" textAlignment="CENTER" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
