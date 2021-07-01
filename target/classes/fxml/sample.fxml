@@ -20,14 +20,14 @@
          <children>
             <VBox alignment="TOP_CENTER" maxWidth="250.0" prefHeight="344.0" prefWidth="184.0" style="-fx-background-color: #202022;" styleClass="left-bar" stylesheets="@../css/main.css" HBox.hgrow="ALWAYS">
                <children>
-                  <VBox alignment="CENTER" prefHeight="82.0" prefWidth="179.0" spacing="10.0">
+                  <VBox alignment="CENTER" prefHeight="82.0" prefWidth="179.0" spacing="10.0" VBox.vgrow="SOMETIMES">
                      <children>
                         <Label id="Username" fx:id="username" alignment="CENTER" text="Label" textAlignment="CENTER" />
                         <Label fx:id="globalCost" text="Label" textAlignment="CENTER" />
                      </children>
                   </VBox>
-                  <Pane prefHeight="40.0" prefWidth="179.0" VBox.vgrow="ALWAYS" />
-                  <VBox id="groupContainer" alignment="TOP_CENTER" prefHeight="244.0" prefWidth="159.0" spacing="8.0">
+                  <Pane prefHeight="215.0" prefWidth="250.0" VBox.vgrow="ALWAYS" />
+                  <VBox id="groupContainer" alignment="TOP_CENTER" prefHeight="244.0" prefWidth="159.0" spacing="8.0" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
@@ -89,7 +89,7 @@
                      <children>
                         <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="335.0" prefWidth="392.0" HBox.hgrow="ALWAYS">
                            <content>
-                              <HBox prefHeight="419.0" prefWidth="0.0">
+                              <HBox alignment="TOP_CENTER" prefHeight="419.0" prefWidth="0.0">
                                  <children>
                                     <Pane prefHeight="419.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
                                     <GridPane fx:id="grid" alignment="CENTER" hgap="50.0" prefHeight="419.0" prefWidth="557.0" vgap="50.0" HBox.hgrow="ALWAYS">

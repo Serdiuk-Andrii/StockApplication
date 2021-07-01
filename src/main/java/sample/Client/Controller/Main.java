@@ -15,6 +15,10 @@ import java.io.IOException;
 public class Main extends Application {
 
 
+    public static final int GROUP_NAME_MAX_LENGTH = 100;
+    public static final int GROUP_DESCRIPTION_MAX_LENGTH = 255;
+
+
     public static Stage window;
     public static StoreClientTCP clientTCP;
     private static final int PORT = 3307;
@@ -26,9 +30,9 @@ public class Main extends Application {
         primaryStage.setMinWidth(750);
         primaryStage.setMinHeight(600);
         setupConnectionWithServer();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         primaryStage.setTitle("Stock application");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
     }
 

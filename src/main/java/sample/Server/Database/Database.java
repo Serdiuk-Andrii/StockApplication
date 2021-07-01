@@ -317,7 +317,7 @@ public class Database {
     }
 
     public static ResultSet getProductsContainingString(final String string) throws SQLException {
-        final String query = "SELECT * FROM " + TABLE_NAME + " WHERE title LIKE ?";
+        final String query = "SELECT * FROM " + TABLE_NAME + " WHERE title COLLATE utf8mb4_0900_ai_ci LIKE ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, '%' + string + '%');
         return preparedStatement.executeQuery();
@@ -418,9 +418,9 @@ public class Database {
 //        Database.registerUser("hello", "world");
        // Database.createGroupsTable();
        // Database.createTable();
-        /*ResultSet set = Database.getProductsContainingString("w");
+        ResultSet set = Database.getProductsContainingString("sauSAge");
         while(set.next())
-            System.out.println(set.getString("group_name"));*/
+            System.out.println(set.getString("group_name"));
 //        Database.addGroup("rice", "good rice");
 //        Database.addProduct("rice", "new rice", "r", "e", 32,32);
 //        Database.removeGroup("rice");

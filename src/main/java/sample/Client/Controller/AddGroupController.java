@@ -1,5 +1,6 @@
 package sample.Client.Controller;
 
+import Utilities.MaximumRestrictedTextFieldListener;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -75,7 +76,10 @@ public class AddGroupController implements Initializable {
     private void initializeValidators() {
         RequiredFieldValidator nameValidator = new RequiredFieldValidator();
         addGroupName.getValidators().add(nameValidator);
+        addGroupName.textProperty().addListener(new Utilities.MaximumRestrictedTextFieldListener(addGroupName, Main.GROUP_NAME_MAX_LENGTH));
         RequiredFieldValidator descriptionValidator = new RequiredFieldValidator();
         addGroupDescription.getValidators().add(descriptionValidator);
+        addGroupDescription.textProperty().addListener(new MaximumRestrictedTextFieldListener(addGroupDescription,
+                Main.GROUP_DESCRIPTION_MAX_LENGTH));
     }
 }

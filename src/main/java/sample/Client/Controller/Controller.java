@@ -29,6 +29,7 @@ import java.net.URL;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
@@ -115,12 +116,12 @@ public class Controller implements Initializable {
 
     @FXML
     void searchOnClick(MouseEvent event) throws IOException {
-        final String input = searchBox.getText();
+        final String input = searchBox.getText().toLowerCase();
+        filteredData.clear();
         if (input.isEmpty()) {
             resetGroups();
             return;
         }
-        filteredData.clear();
         if (productsToggle.isSelected()) {
             try {
                 filteredData.addAll(Main.clientTCP.getGroupsWithProductsContainingSubstring(input));
@@ -131,8 +132,8 @@ public class Controller implements Initializable {
             }
         }
         for (Group group : groups)
-            if (!filteredData.contains(group) && ((nameToggle.isSelected() && group.getName().contains(input))
-            || (descriptionToggle.isSelected() && group.getDescription().contains(input))))
+            if (!filteredData.contains(group) && ((nameToggle.isSelected() && group.getName().toLowerCase().contains(input))
+            || (descriptionToggle.isSelected() && group.getDescription().toLowerCase().contains(input))))
                 filteredData.add(group);
 
         filterData();

@@ -31,9 +31,6 @@ import javafx.stage.Stage;
 
 public class GroupController implements Initializable {
 
-
-
-
     private Group currentGroup;
 
     @FXML
