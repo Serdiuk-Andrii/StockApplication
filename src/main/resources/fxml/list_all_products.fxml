@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Client.Controller.ListAllProductsController">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="-1.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="64.0" prefWidth="600.0">
+               <children>
+                  <JFXTextField fx:id="searchField" labelFloat="true" promptText="Search" />
+               </children>
+            </HBox>
+            <TableView fx:id="allProducts" prefHeight="340.0" prefWidth="600.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+              <columns>
+                  <TableColumn fx:id="productNameColumn" prefWidth="75.0" text="Product name" />
+                  <TableColumn fx:id="groupNameColumn" prefWidth="75.0" text="Group name" />
+                  <TableColumn fx:id="producerColumn" prefWidth="75.0" text="Producer" />
+                <TableColumn fx:id="amountColumn" prefWidth="75.0" text="Amount" />
+                <TableColumn fx:id="priceColumn" prefWidth="75.0" text="Price" />
+                  <TableColumn fx:id="descriptionColumn" prefWidth="75.0" text="Description" visible="false" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
